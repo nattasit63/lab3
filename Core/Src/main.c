@@ -24,6 +24,8 @@
 /* USER CODE BEGIN Includes */
 float ADCOutputConverted;
 uint16_t ADCMode=0;
+uint8_t  s[2]={0};
+uint8_t  n=0;
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -302,8 +304,18 @@ void ADCPollingMethodInit() {
 //Polling Method
 void ADCPollingMethodUpdate() {
 
-
-
+		s[0]=HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_5);
+		if (s[1]== GPIO_PIN_RESET && s[0]==GPIO_PIN_SET)
+		{
+		 n =n+1;
+		 if (n%2==0){
+			 ADCMode=0;
+		 }
+		 if (n%2 ==1){
+			 ADCMode=1;
+		 }
+		}
+		s[1]=s[0];
 
 		if(ADCMode ==0)
 		{
@@ -324,6 +336,7 @@ void ADCPollingMethodUpdate() {
 		ADCOutputConverted = ADCChannel[1].data;
 		HAL_ADC_Stop(&hadc1);
 		}
+
 }
 /* USER CODE END 4 */
 
