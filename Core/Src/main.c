@@ -333,7 +333,7 @@ void ADCPollingMethodUpdate() {
 		HAL_ADC_Start(&hadc1);
 		HAL_ADC_PollForConversion(&hadc1, 10);
 		ADCChannel[1].data = HAL_ADC_GetValue(&hadc1);
-		ADCOutputConverted = ADCChannel[1].data;
+		ADCOutputConverted = (((ADCChannel[1].data*3.3*1000/4096)-760)/2.5)+25;
 		HAL_ADC_Stop(&hadc1);
 		}
 
